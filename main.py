@@ -1,38 +1,71 @@
-class SetAmallari:
-    def __init__(self, set1, set2):
-        self.set1 = set1
-        self.set2 = set2
+class Product:
+    def __init__(self, name, price, quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
 
-    def birlashtirma(self):
-        return self.set1.union(self.set2)
+class Stock:
+    def __init__(self):
+        self.products = []
 
-    def qatnashma(self):
-        return self.set1.intersection(self.set2)
+    def add_product(self, product):
+        self.products.append(product)
 
-    def farq(self):
-        return self.set1.difference(self.set2)
+    def remove_product(self, product_name):
+        for product in self.products:
+            if product.name == product_name:
+                self.products.remove(product)
+                break
 
-    def simmetrikFarq(self):
-        return self.set1.symmetric_difference(self.set2)
+    def update_product_quantity(self, product_name, quantity):
+        for product in self.products:
+            if product.name == product_name:
+                product.quantity = quantity
+                break
 
-    def kiritish(self, element):
-        self.set1.add(element)
+class Supplier:
+    def __init__(self, name, address):
+        self.name = name
+        self.address = address
 
-    def ochirish(self, element):
-        self.set1.remove(element)
+class InventoryManagementSystem:
+    def __init__(self):
+        self.stock = Stock()
+        self.suppliers = []
 
-def main():
-    set1 = {1, 2, 3, 4}
-    set2 = {3, 4, 5, 6}
-    amallar = SetAmallari(set1, set2)
-    print("Birlashtirma:", amallar.birlashtirma())
-    print("Qatnashma:", amallar.qatnashma())
-    print("Farq:", amallar.farq())
-    print("Simmetrik farq:", amallar.simmetrikFarq())
-    amallar.kiritish(7)
-    print("Set1 ga 7 qo'shildadi:", amallar.set1)
-    amallar.ochirish(4)
-    print("Set1 dan 4 ochirildi:", amallar.set1)
+    def add_supplier(self, supplier):
+        self.suppliers.append(supplier)
 
-if __name__ == "__main__":
-    main()
+    def remove_supplier(self, supplier_name):
+        for supplier in self.suppliers:
+            if supplier.name == supplier_name:
+                self.suppliers.remove(supplier)
+                break
+
+    def display_stock(self):
+        for product in self.stock.products:
+            print(f"Product: {product.name}, Price: {product.price}, Quantity: {product.quantity}")
+
+    def display_suppliers(self):
+        for supplier in self.suppliers:
+            print(f"Supplier: {supplier.name}, Address: {supplier.address}")
+
+ims = InventoryManagementSystem()
+product1 = Product("Laptop", 1000, 10)
+product2 = Product("Phone", 500, 20)
+supplier1 = Supplier("Apple", "New York")
+supplier2 = Supplier("Samsung", "Seoul")
+
+ims.stock.add_product(product1)
+ims.stock.add_product(product2)
+ims.add_supplier(supplier1)
+ims.add_supplier(supplier2)
+
+ims.display_stock()
+ims.display_suppliers()
+
+ims.stock.update_product_quantity("Laptop", 5)
+ims.remove_supplier("Samsung")
+
+ims.display_stock()
+ims.display_suppliers()
