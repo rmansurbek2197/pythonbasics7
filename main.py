@@ -15,18 +15,16 @@ class Stock:
         for product in self.products:
             if product.name == product_name:
                 self.products.remove(product)
-                break
 
-    def update_product_quantity(self, product_name, quantity):
+    def update_product(self, product_name, new_quantity):
         for product in self.products:
             if product.name == product_name:
-                product.quantity = quantity
-                break
+                product.quantity = new_quantity
 
 class Supplier:
-    def __init__(self, name, address):
+    def __init__(self, name, phone_number):
         self.name = name
-        self.address = address
+        self.phone_number = phone_number
 
 class InventoryManagementSystem:
     def __init__(self):
@@ -40,7 +38,15 @@ class InventoryManagementSystem:
         for supplier in self.suppliers:
             if supplier.name == supplier_name:
                 self.suppliers.remove(supplier)
-                break
+
+    def add_product_to_stock(self, product):
+        self.stock.add_product(product)
+
+    def remove_product_from_stock(self, product_name):
+        self.stock.remove_product(product_name)
+
+    def update_product_quantity(self, product_name, new_quantity):
+        self.stock.update_product(product_name, new_quantity)
 
     def display_stock(self):
         for product in self.stock.products:
@@ -48,24 +54,25 @@ class InventoryManagementSystem:
 
     def display_suppliers(self):
         for supplier in self.suppliers:
-            print(f"Supplier: {supplier.name}, Address: {supplier.address}")
+            print(f"Supplier: {supplier.name}, Phone Number: {supplier.phone_number}")
 
-ims = InventoryManagementSystem()
-product1 = Product("Laptop", 1000, 10)
-product2 = Product("Phone", 500, 20)
-supplier1 = Supplier("Apple", "New York")
-supplier2 = Supplier("Samsung", "Seoul")
+system = InventoryManagementSystem()
+product1 = Product("Product1", 100, 10)
+product2 = Product("Product2", 200, 20)
+supplier1 = Supplier("Supplier1", "1234567890")
+supplier2 = Supplier("Supplier2", "9876543210")
 
-ims.stock.add_product(product1)
-ims.stock.add_product(product2)
-ims.add_supplier(supplier1)
-ims.add_supplier(supplier2)
+system.add_product_to_stock(product1)
+system.add_product_to_stock(product2)
+system.add_supplier(supplier1)
+system.add_supplier(supplier2)
 
-ims.display_stock()
-ims.display_suppliers()
+system.display_stock()
+system.display_suppliers()
 
-ims.stock.update_product_quantity("Laptop", 5)
-ims.remove_supplier("Samsung")
+system.update_product_quantity("Product1", 15)
+system.remove_product_from_stock("Product2")
+system.remove_supplier("Supplier1")
 
-ims.display_stock()
-ims.display_suppliers()
+system.display_stock()
+system.display_suppliers()
